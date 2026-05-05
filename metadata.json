@@ -1,0 +1,8 @@
+{
+  "name": "OpenSauce",
+  "description": "OpenSauce Weather: A modern, community-driven dashboard that humanizes official South African Weather Service (SAWS) data with a local vibe.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": []
+}
