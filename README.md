@@ -1,20 +1,27 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# OpenSauce Weather
 
-# Run and deploy your AI Studio app
+A modern, community-driven dashboard that humanizes official South African Weather Service (SAWS) data with a local vibe.
 
-This contains everything you need to run your app locally.
+## Overview
 
-View your app in AI Studio: https://ai.studio/apps/203256bc-b551-4615-b96d-db5b90103b7d
+OpenSauce Weather provides clear, accessible, and localized weather alerts by interpreting raw data from the South African Weather Service (SAWS). The goal is to present complex weather information in a format that's easy to read and understand at a glance, helping communities stay safe and informed.
 
-## Run Locally
+## Features
 
-**Prerequisites:**  Node.js
+- **Live SAWS Alerts:** Fetches and processes active weather warnings and advisories from SAWS.
+- **Intuitive UI:** Clean and responsive interface built with React, Vite, and Tailwind CSS.
+- **Localized Context:** Turns technical meteorological jargon into practical advice for daily life.
 
+## Development
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+This application features a React + Vite frontend with an Express backend for fetching and parsing weather data safely. 
+
+### Commands
+
+- \`npm install\` - Install dependencies
+- \`npm run dev\` - Start the development server (runs both frontend and backend)
+- \`npm run build\` - Build the application for production
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
