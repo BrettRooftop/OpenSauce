@@ -32,10 +32,27 @@ export function PushNotificationModal({ onClose, defaultRegion }: Props) {
       
       if (permission === "granted") {
         // Show a test notification immediately
-        new Notification("Weather Alerts Enabled", {
-          body: `You will now receive alerts for ${region}.`,
-          icon: "/favicon.ico"
-        });
+        try {
+          let shown = false;
+          if ("serviceWorker" in navigator) {
+            const registration = await navigator.serviceWorker.getRegistration();
+            if (registration && registration.showNotification) {
+              await registration.showNotification("Weather Alerts Enabled", {
+                body: `You will now receive alerts for ${region}.`,
+                icon: "/favicon.ico"
+              });
+              shown = true;
+            }
+          }
+          if (!shown) {
+            new Notification("Weather Alerts Enabled", {
+              body: `You will now receive alerts for ${region}.`,
+              icon: "/favicon.ico"
+            });
+          }
+        } catch (notificationErr) {
+          console.warn("Could not show test notification, but permission was granted:", notificationErr);
+        }
         
         setSuccess(true);
         setTimeout(onClose, 2500);
@@ -109,24 +126,27 @@ export function PushNotificationModal({ onClose, defaultRegion }: Props) {
               )}
 
               <div className="space-y-1.5">
-                <label className="text-[11px] font-bold text-slate-600 uppercase tracking-wider pl-1">Alert Region</label>
-                 <select 
+                <label className="text-[11px] font-bold text-slate-600 uppercase tracking-wider pl-1">Location (City or Province)</label>
+                <input 
+                  type="text"
                   required
                   value={region}
                   onChange={e => setRegion(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-colors appearance-none"
-                >
-                  <option value="" disabled>Select your province...</option>
-                  <option value="Eastern Cape">Eastern Cape</option>
-                  <option value="Free State">Free State</option>
-                  <option value="Gauteng">Gauteng</option>
-                  <option value="KwaZulu-Natal">KwaZulu-Natal</option>
-                  <option value="Limpopo">Limpopo</option>
-                  <option value="Mpumalanga">Mpumalanga</option>
-                  <option value="North West">North West</option>
-                  <option value="Northern Cape">Northern Cape</option>
-                  <option value="Western Cape">Western Cape</option>
-                </select>
+                  placeholder="e.g. Cape Town or Western Cape..."
+                  list="provinces"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-colors"
+                />
+                <datalist id="provinces">
+                  <option value="Eastern Cape" />
+                  <option value="Free State" />
+                  <option value="Gauteng" />
+                  <option value="KwaZulu-Natal" />
+                  <option value="Limpopo" />
+                  <option value="Mpumalanga" />
+                  <option value="North West" />
+                  <option value="Northern Cape" />
+                  <option value="Western Cape" />
+                </datalist>
               </div>
 
               <div className="pt-2">
